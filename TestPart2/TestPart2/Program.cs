@@ -13,20 +13,56 @@ namespace TestPart2
             //question 1
             //List<string> javaList = new List<string>() { "java", "jjava", "vaj", "aavj", "j", "vjaa", "dan", "and", "ddan" };
             //while (true)
-            //    Console.WriteLine(RepeatCount(javaList, Console.ReadLine()));
+            //    Console.WriteLine(RepeatCount2(javaList, Console.ReadLine()));
 
             //question 2
             while (true)
                 Push5Pop5();
         }
 
+        ///// <summary>
+        ///// Question 1 (old, there's a better one below) saving it here in case i actually need it
+        ///// </summary>
+        ///// <param name="strings"></param>
+        ///// <param name="word"></param>
+        ///// <returns></returns>
+        //static int RepeatCount(List<string> strings, string word)
+        //{
+        //    int counter = 0;
+
+        //    string wordClone = word; //thought about stringbuilder but it doesn't have some methods that string has
+
+        //    for (int i = 0; i < strings.Count; i++)
+        //    {
+        //        counter++;
+        //        foreach (var letter in strings[i])
+        //        {
+        //            if (wordClone.Contains(letter))
+        //            {
+        //                wordClone = wordClone.Remove(wordClone.IndexOf(letter), 1);
+        //            }
+        //            else
+        //            {
+        //                counter--;
+        //                wordClone = ""; //reset here so the length checker won't reduce the counter twice, weird workaround but it works
+        //                break;
+        //            }
+        //        }
+        //        if (wordClone.Length != 0)
+        //            counter--;
+        //        wordClone = word;
+        //    }
+
+        //    return counter;
+        //}
+
         /// <summary>
-        /// Question 1
+        /// question 1 (new, and improved)
         /// </summary>
         /// <param name="strings"></param>
         /// <param name="word"></param>
         /// <returns></returns>
-        static int RepeatCount(List<string> strings, string word)
+        static int RepeatCount2(List<string> strings, string word)
         {
             int counter = 0;
 
@@ -34,26 +70,31 @@ namespace TestPart2
 
             for (int i = 0; i < strings.Count; i++)
             {
-                counter++;
-                foreach (var letter in strings[i])
+                bool worthy = true;
+                if (wordClone.Length != strings[i].Length)
                 {
-                    if (wordClone.Contains(letter))
+                    worthy = false;
+                }
+                else
+                {
+                    foreach (var letter in strings[i])
                     {
-                        wordClone = wordClone.Remove(wordClone.IndexOf(letter), 1);
-                    }
-                    else
-                    {
-                        counter--;
-                        wordClone = ""; //reset here so the length checker won't reduce the counter twice, weird workaround but it works
-                        break;
+                        if (wordClone.Contains(letter))
+                        {
+                            wordClone = wordClone.Remove(wordClone.IndexOf(letter), 1);
+                        }
+                        else
+                        {
+                            worthy = false;
+                            break;
+                        }
                     }
                 }
-                if (wordClone.Length != 0)
-                    counter--;
+                if (worthy == true)
+                    counter++;
+
                 wordClone = word;
             }
-
-
 
             return counter;
         }
